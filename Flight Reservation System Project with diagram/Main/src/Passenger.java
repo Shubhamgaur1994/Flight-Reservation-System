@@ -1,81 +1,50 @@
+package com.upgrad.frs;
+
 public class Passenger {
+    private static int idCounter = 0;
+    private int id;
 
-    public static class Address {
-        private String street, city, state;
+    private static class Address {
+        String street, city, state;
 
-        public Address(String street, String city, String state) {
+        Address(String street, String city, String state) {
             this.street = street;
             this.city = city;
             this.state = state;
         }
-
-        public String getStreet() {
-            return street;
-        }
-
-        public void setStreet(String street) {
-            this.street = street;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        public String getState() {
-            return state;
-        }
-
-        public void setState(String state) {
-            this.state = state;
-        }
     }
+    private Address address;
 
-    public static class Contact {
-        private String name, phone, email;
+    private static class Contact {
+        String name, phone, email;
 
-        public Contact(String name, String phone, String email) {
+        Contact(String name, String phone, String email) {
             this.name = name;
             this.phone = phone;
             this.email = email;
         }
+    }
+    private Contact contact;
 
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getPhone() {
-            return phone;
-        }
-
-        public void setPhone(String phone) {
-            this.phone = phone;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
+    public Passenger(String street, String city, String state, String name, String phone, String email) {
+        this.id = ++idCounter;
+        this.address = new Address(street, city, state);
+        this.contact = new Contact(name, phone, email);
     }
 
-    public String Passenger( String street, String city, String state,String name,String phone,String email) {
-        Address Address = new Address(street, city, state);
-        Contact Contact = new Contact(name, phone, email);
-        return "Passenger Details: "+ street + " , " + city + " , " + state+","+name+" , "+ phone+ " , "+ email;
+    public int getId() {
+        return this.id;
     }
-        }
 
+    public String getAddressDetails() {
+        return "Street: " + address.street + ", City: " + address.city + ", State: " + address.state;
+    }
 
+    public String getContactDetails() {
+        return "Name: " + contact.name + ", Phone: " + contact.phone + ", Email: " + contact.email;
+    }
 
+    public static int getPassengerCount() {
+        return idCounter;
+    }
+}

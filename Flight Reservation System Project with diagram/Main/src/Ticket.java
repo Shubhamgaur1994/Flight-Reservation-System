@@ -1,159 +1,126 @@
-import javax.swing.*;
+package com.upgrad.frs;
 
-public class Ticket {
-    private String checkstatus;
-    private String Duration;
-    private String CancelledorConfirmed;
-    private int id, Departuretime, Arrivaltime, seatno, Flight;
-    private String PNR, Depature, DepatureDate, Arrival, ArrivalDate, PassengerType;
-    private Boolean isCancelled;
+import java.time.LocalDateTime;
 
-    public Ticket( String PNR,Boolean isCancelled, String checkstatus, String duration,  int id, int departuretime, int arrivaltime, int seatno, int flight, String depature, String depatureDate, String arrival, String arrivalDate, String passengerType) {
-        this.isCancelled = isCancelled;
-        this.checkstatus = checkstatus;
-        this.Duration = duration;
-        this.id = id;
-        this.Departuretime = departuretime;
-        this.Arrivaltime = arrivaltime;
-        this.seatno = seatno;
-        this.Flight = flight;
-        this.PNR = PNR;
-        this.Depature = depature;
-        this.DepatureDate = depatureDate;
-        this.Arrival = arrival;
-        this.ArrivalDate = arrivalDate;
-        this.PassengerType = passengerType;
+public abstract class Ticket {
+    private String pnr;
+    private String from;
+    private String to;
+    private String departureDateTime;
+    private String arrivalDateTime;
+    private String seatNo;
+    private float price;
+    private boolean cancelled;
+    private Flight flight;
+    private Passenger passenger;
+
+    public Ticket(String pnr, String from, String to, String departureDateTime,
+                  String arrivalDateTime, String seatNo, float price, boolean cancelled,
+                  Flight flight, Passenger passenger) {
+        this.pnr = pnr;
+        this.from = from;
+        this.to = to;
+        this.departureDateTime = departureDateTime;
+        this.arrivalDateTime = arrivalDateTime;
+        this.seatNo = seatNo;
+        this.price = price;
+        this.cancelled = cancelled;
+        this.flight = flight;
+        this.passenger = passenger;
     }
 
-    public String getCheckstatus() {
-        return checkstatus;
+    public String checkStatus() {
+        return cancelled ? "Cancelled" : "Confirmed";
     }
 
-    public void setCheckstatus(String checkstatus) {
-        this.checkstatus = checkstatus;
+    public int getFlightDuration() {
+        LocalDateTime departureLocalDateTime = LocalDateTime.parse(departureDateTime);
+        LocalDateTime arrivalLocalDateTime = LocalDateTime.parse(arrivalDateTime);
+        return (arrivalLocalDateTime.getDayOfMonth() - departureLocalDateTime.getDayOfMonth()) * 24 +
+                (arrivalLocalDateTime.getHour() - departureLocalDateTime.getHour());
     }
 
-    public String getDuration() {
-        return Duration;
+    public void cancel() {
+        cancelled = true;
     }
 
-    public void setDuration(String duration) {
-        Duration = duration;
+    public String getPnr() {
+        return pnr;
     }
 
-
-    public int getId() {
-        return id;
+    public void setPnr(String pnr) {
+        this.pnr = pnr;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getFrom() {
+        return from;
     }
 
-    public int getDeparturetime() {
-        return Departuretime;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public void setDeparturetime(int departuretime) {
-        Departuretime = departuretime;
+    public String getTo() {
+        return to;
     }
 
-    public int getArrivaltime() {
-        return Arrivaltime;
+    public void setTo(String to) {
+        this.to = to;
     }
 
-    public void setArrivaltime(int arrivaltime) {
-        Arrivaltime = arrivaltime;
+    public String getDepartureDateTime() {
+        return departureDateTime;
     }
 
-    public int getSeatno() {
-        return seatno;
+    public void setDepartureDateTime(String departureDateTime) {
+        this.departureDateTime = departureDateTime;
     }
 
-    public void setSeatno(int seatno) {
-        this.seatno = seatno;
+    public String getArrivalDateTime() {
+        return arrivalDateTime;
     }
 
-    public int getFlight() {
-        return Flight;
+    public void setArrivalDateTime(String arrivalDateTime) {
+        this.arrivalDateTime = arrivalDateTime;
     }
 
-    public void setFlight(int flight) {
-        Flight = flight;
+    public String getSeatNo() {
+        return seatNo;
     }
 
-    public String getPNR() {
-        return PNR;
+    public void setSeatNo(String seatNo) {
+        this.seatNo = seatNo;
     }
 
-    public void setPNR(String PNR) {
-        this.PNR = PNR;
+    public float getPrice() {
+        return price;
     }
 
-    public String getDepature() {
-        return Depature;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
-    public void setDepature(String depature) {
-        Depature = depature;
+    public boolean isCancelled() {
+        return cancelled;
     }
 
-    public String getDepatureDate() {
-        return DepatureDate;
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
-    public void setDepatureDate(String depatureDate) {
-        DepatureDate = depatureDate;
+    public Flight getFlight() {
+        return flight;
     }
 
-    public String getArrival() {
-        return Arrival;
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
-    public void setArrival(String arrival) {
-        Arrival = arrival;
+    public Passenger getPassenger() {
+        return passenger;
     }
 
-    public String getArrivalDate() {
-        return ArrivalDate;
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
     }
-
-    public void setArrivalDate(String arrivalDate) {
-        ArrivalDate = arrivalDate;
-    }
-
-    public String getPassengerType() {
-        return PassengerType;
-    }
-
-    public void setPassengerType(String passengerType) {
-        PassengerType = passengerType;
-    }
-
-    public String isCancelled() {
-        String Str = new String("str1");
-        String str1;
-        if (isCancelled == true) {
-            str1 = "The flight is cancelled";
-            return str1;
-        }
-        if (isCancelled == false) {
-            str1 = "The flight is confirmed";
-            return str1;
-        }
-        return Str;
-    }
-
-    public String Ticket() {
-        return "Ticket Detail:" +isCancelled()+" , "+getPNR()+" , "+getCheckstatus()+" , "+getArrival()+" , "+getArrivalDate()+" , "+getDepatureDate()+" , "+getDuration()+" , "+getPassengerType()+" , "+getArrivaltime()+" , "+getDeparturetime()+" , "+getFlight()+" , "+getSeatno()+" , "+getId();
-    }
-
-    public String PNRStatus() {
-        return "PNR Number: " + this.getPNR();
-    }
-
-
-    
 }
-
-

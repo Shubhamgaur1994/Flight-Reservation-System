@@ -1,64 +1,63 @@
-public class TouristTicket extends Ticket{
-    private Boolean isCancelled;
-    private String Hoteladdress;
-    private String Location;
-    private String AddLocation,RemoveLocation;
-    public String getHoteladdress() {
-        return Hoteladdress;
+package com.upgrad.frs;
+
+import java.time.LocalDateTime;
+
+public class TouristTicket extends Ticket {
+    private String hotelAddress;
+    private String[] selectedTouristLocation;
+
+    public TouristTicket(String pnr, String from, String to, String departureDateTime,
+                         String arrivalDateTime, String seatNo, float price, boolean cancelled,
+                         Flight flight, Passenger passenger, String hotelAddress,
+                         String[] selectedTouristLocation) {
+        super(pnr, from, to, departureDateTime, arrivalDateTime, seatNo, price, cancelled, flight, passenger);
+        this.hotelAddress = hotelAddress;
+        this.selectedTouristLocation = selectedTouristLocation;
     }
 
-    public void setHoteladdress(String hoteladdress) {
-        Hoteladdress = hoteladdress;
+    public String getHotelAddress() {
+        return hotelAddress;
     }
 
-    public String getLocation() {
-        return Location;
+    public void setHotelAddress(String hotelAddress) {
+        this.hotelAddress = hotelAddress;
     }
 
-    public void setLocation(String location) {
-        Location = location;
+    public String[] getSelectedTouristLocation() {
+        return selectedTouristLocation;
     }
 
-    public String getAddLocation() {
-        return AddLocation;
+    public void setSelectedTouristLocation(String[] selectedTouristLocation) {
+        this.selectedTouristLocation = selectedTouristLocation;
     }
 
-    public void setAddLocation(String addLocation) {
-        AddLocation = addLocation;
-    }
-
-    public String getRemoveLocation() {
-        return RemoveLocation;
-    }
-
-    public void setRemoveLocation(String removeLocation) {
-        RemoveLocation = removeLocation;
-    }
-
-    public TouristTicket(String PNR,Boolean isCancelled,String checkstatus, String duration,  int id, int departuretime, int arrivaltime, int seatno, int flight,  String depature, String depatureDate, String arrival, String arrivalDate, String passengerType, String Hoteladdress, String Location,String AddLocation,String RemoveLocation ) {
-        super(PNR,isCancelled, checkstatus, duration, id, departuretime, arrivaltime, seatno, flight, depature, depatureDate, arrival, arrivalDate, passengerType);
-        this.isCancelled=isCancelled;
-        this.Hoteladdress = Hoteladdress;
-        this.Location = Location;
-        this.AddLocation=AddLocation;
-        this.RemoveLocation=RemoveLocation;
-    }
-    public String isCancelled() {
-        String Str = new String("str1");
-        String str1;
-        if (isCancelled == true) {
-            str1 = "The flight is cancelled";
-            return str1;
+    public void removeTouristLocation(String location) {
+        int index=-1;
+        for (int i=0; i<selectedTouristLocation.length; i++) {
+            if (selectedTouristLocation[i].equals(location)) {
+                index = i;
+                break;
+            }
         }
-        if (isCancelled == false) {
-            str1 = "The flight is confirmed";
-            return str1;
+        if (index == -1) {
+            return;
         }
-        return Str;
-    }
-    public String TouristTicket() {
-        return "TouristTicket Detail: " +isCancelled()+" , "+getPNR()+" , "+getCheckstatus()+" , "+getArrival()+" , "+getArrivalDate()+" , "+getDepatureDate()+" , "+getDuration()+" , "+getPassengerType()+" , "+getArrivaltime()+" , "+getDeparturetime()+" , "+getFlight()+" , "+getSeatno()+" , "+getId()+" , "+getHoteladdress()+" , "+getLocation()+" , "+getAddLocation()+" , "+getRemoveLocation();
+        for (int i=index; i< selectedTouristLocation.length-1; i++) {
+            selectedTouristLocation[i] = selectedTouristLocation[i+1];
+        }
+        selectedTouristLocation[selectedTouristLocation.length-1] = null;
     }
 
-
+    public void addTouristLocation(String location) {
+        int index = -1;
+        for (int i=0; i< selectedTouristLocation.length; i++) {
+            if (selectedTouristLocation[i] == null) {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1) {
+            selectedTouristLocation[index] = location;
+        }
+    }
 }
